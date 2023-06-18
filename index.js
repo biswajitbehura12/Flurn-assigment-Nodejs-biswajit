@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
+sgMail.setApiKey('');
 const connectingD=async()=>{
     await mongoose.connect('mongodb+srv://dpuser:dpUser@blog-app2.hfxckhs.mongodb.net/?retryWrites=true&w=majority', {
        useNewUrlParser: true,
