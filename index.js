@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
+sgMail.setApiKey('put my api key');
 const connectingD=async()=>{
     await mongoose.connect('mongodb+srv://dpuser:dpUser@blog-app2.hfxckhs.mongodb.net/?retryWrites=true&w=majority', {
        useNewUrlParser: true,
@@ -38,10 +38,10 @@ const bookingSchema = new mongoose.Schema({
 });
 const Booking = mongoose.model('Booking', bookingSchema);
 
-// Middleware to parse request body
+
 app.use(bodyParser.json());
 
-// Get all seats ordered by seat class
+
 app.get('/seats', async (req, res) => {
   try {
     const seats = await Seat.find().sort('seatClass');
@@ -51,7 +51,7 @@ app.get('/seats', async (req, res) => {
   }
 });
 
-// Get seat details and pricing based on seat id
+
 app.get('/seats/:id', async (req, res) => {
   try {
     const seat = await Seat.findById(req.params.id);
@@ -90,7 +90,7 @@ app.post('/booking', async (req, res) => {
   }
   
  
-  // Function to send booking confirmation email
+  
   async function sendBookingConfirmationEmail(email, savedBooking) {
    
     const msg = {
@@ -117,12 +117,7 @@ app.post('/booking', async (req, res) => {
     }
   }
   
-  // Example usage:
-  
-  //const email = 'john@example.com';
-  
-  
-  // Create the booking
+ 
   const booking = new Booking({
     seatIds,
     name,
@@ -132,7 +127,7 @@ app.post('/booking', async (req, res) => {
 
   try {
     const savedBooking = await booking.save();
-    // Update the seats to mark them as booked
+   
    
     await Seat.findOneAndUpdate(
       { _id: { $in: seatIds } },
@@ -148,8 +143,8 @@ app.post('/booking', async (req, res) => {
   }
 });
 
-// Retrieve bookings by user identifier (email or phone number)
-app.get('/bookings', async (req, res) => {
+
+app.get('/bookings-byemail', async (req, res) => {
   const userIdentifier = req.query.userIdentifier;
   if (!userIdentifier) {
     return res.status(400).json({ error: 'User identifier is required' });
